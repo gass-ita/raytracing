@@ -27,6 +27,15 @@ public class Color {
     public Color copy(){
         return new Color(this);
     }
+
+    static public Color add(Color color1, Color color2){
+        return new Color(color1.getRed() + color2.getRed(), color1.getGreen() + color2.getGreen(), color1.getBlue() + color2.getBlue());
+    }
+
+    static public Color multiply(Color color, double scalar){
+        return new Color((int)(color.getRed() * scalar), (int)(color.getGreen() * scalar), (int)(color.getBlue() * scalar));
+    }
+
     
     public Color add(Color color){
         return new Color(this.red + color.getRed(), this.green + color.getGreen(), this.blue + color.getBlue());
