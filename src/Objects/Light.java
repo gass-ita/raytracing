@@ -4,14 +4,17 @@ import Math.Ray;
 import Math.Vector3;
 
 public class Light extends GObject{
+    static final double DEFAULT_INTENSITY = 1;
+
     private double intensity;
 
     public Light(){
         super();
+        this.intensity = DEFAULT_INTENSITY;
     }
 
     public Light(Vector3 position, double intensity){
-        super(new Transform(position), new Material());
+        super(new Transform(position));
         this.intensity = intensity;
     }
 
@@ -22,7 +25,7 @@ public class Light extends GObject{
     }
 
     public Light(Light light){
-        super(light.getTransform(), light.getMaterial());
+        super(light.getTransform());
         this.intensity = light.getIntensity();
     }
 
@@ -51,6 +54,14 @@ public class Light extends GObject{
 
     public void setIntensity(double intensity){
         this.intensity = intensity;
+    }
+
+    @Override
+    public double getDistance(Ray ray) {
+        if(getIntersection(ray) != null){
+            return Vector3.subtract(ray.getOrigin(), getIntersection(ray)).magnitude();
+        }
+        return Double.MAX_VALUE;
     }
     
 }

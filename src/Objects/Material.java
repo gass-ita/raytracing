@@ -1,6 +1,10 @@
 package Objects;
 
 public class Material {
+    //default values
+    static final Color DEFAULT_COLOR = new Color(0, 0, 0);
+    static final double DEFAULT_REFLECTIVITY = 0;
+
     
     private Color color;
     private double reflectivity;
@@ -8,14 +12,10 @@ public class Material {
     
     
     public Material(){
-        this.color = new Color();
-        this.reflectivity = 0;
+        this.color = DEFAULT_COLOR;
+        this.reflectivity = DEFAULT_REFLECTIVITY;
     }
 
-    public Material(Color color, double reflectivity, double transparency, double refractiveIndex){
-        this.color = color;
-        this.reflectivity = reflectivity;
-    }
 
     public Material(Color color, double reflectivity){
         this.color = color;
@@ -24,7 +24,12 @@ public class Material {
 
     public Material(Color color){
         this.color = color;
-        this.reflectivity = 0;
+        this.reflectivity = DEFAULT_REFLECTIVITY;
+    }
+
+    public Material(double reflectivity){
+        this.color = DEFAULT_COLOR;
+        this.reflectivity = reflectivity;
     }
 
     public Material(Material material){

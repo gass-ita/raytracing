@@ -26,4 +26,17 @@ public class Ray {
     public Vector3 getDirection(){
         return direction;
     }
+
+    public void setOrigin(Vector3 origin){
+        this.origin = origin;
+    }
+
+    public void setDirection(Vector3 direction){
+        this.direction = direction;
+    }
+
+    @Override
+    public String toString() {
+        return "Ray [direction=" + direction + ", origin=" + origin + "]";
+    }
 }

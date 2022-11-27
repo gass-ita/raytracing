@@ -3,13 +3,25 @@ package Objects;
 import Math.Ray;
 import Math.Vector3;
 
-public class Sphere extends GObject{
+public class Sphere extends Solid{
 
-    private double radius;
+    static final double DEFAULT_RADIUS = 1.0;
+
+    protected double radius;
 
     public Sphere(){
         super();
         this.radius = 1;
+    }
+
+    public Sphere(Transform transform){
+        super(transform);
+        this.radius = DEFAULT_RADIUS;
+    }
+
+    public Sphere(Transform transform, Material material){
+        super(transform, material);
+        this.radius = DEFAULT_RADIUS;
     }
 
     public Sphere(Transform transform, Material material, double radius){
@@ -22,7 +34,7 @@ public class Sphere extends GObject{
         this.radius = radius;
     }
 
-
+    // TODO: FIX ME
     @Override
     public Vector3 getNormal(Vector3 point) {
         return point.subtract(transform.getPosition()).normalize();
@@ -53,6 +65,14 @@ public class Sphere extends GObject{
         return ray.getPoint(Math.min(t1, t2));
 
 
+    }
+
+    @Override
+    public double getDistance(Ray ray) {
+        if(getIntersection(ray) != null){
+            return Vector3.subtract(ray.getOrigin(), getIntersection(ray)).magnitude();
+        }
+        return Double.MAX_VALUE;
     }
 
     

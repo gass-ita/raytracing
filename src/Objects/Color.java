@@ -1,21 +1,30 @@
 package Objects;
 
 public class Color {
+
+    //default values
+    static final Color DEFAULT_COLOR = new Color(0, 0, 0);
     
     private int red;
     private int green;
     private int blue;
     
     public Color(){
-        this.red = 255;
-        this.green = 255;
-        this.blue = 255;
+        this.red = DEFAULT_COLOR.getRed();
+        this.green = DEFAULT_COLOR.getGreen();
+        this.blue = DEFAULT_COLOR.getBlue();
     }
     
     public Color(int red, int green, int blue){
         this.red = red;
         this.green = green;
         this.blue = blue;
+    }
+
+    public Color(int bw){
+        this.red = bw;
+        this.green = bw;
+        this.blue = bw;
     }
     
     public Color(Color color){
@@ -24,9 +33,6 @@ public class Color {
         this.blue = color.getBlue();
     }
     
-    public Color copy(){
-        return new Color(this);
-    }
 
     static public Color add(Color color1, Color color2){
         return new Color(color1.getRed() + color2.getRed(), color1.getGreen() + color2.getGreen(), color1.getBlue() + color2.getBlue());
