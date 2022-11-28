@@ -4,6 +4,8 @@ import Math.Ray;
 import Math.Vector3;
 
 public abstract class GObject {
+    
+
     static final Transform DEFAULT_TRANSFORM = new Transform();
 
     protected Transform transform;
@@ -24,9 +26,19 @@ public abstract class GObject {
         this.transform = object.getTransform();
     }
 
-    abstract public Vector3 getNormal(Vector3 point);
+    
+
     abstract public Vector3 getIntersection(Ray ray);
     abstract public double getDistance(Ray ray);
+
+    
+    public Vector3 toLocalCoordinates(Vector3 point){
+        return Vector3.subtract(point, transform.getPosition());
+    }
+
+    public Vector3 toWorldCoordinates(Vector3 point){
+        return Vector3.add(point, transform.getPosition());
+    }
     
 
     public void translate(Vector3 translation){

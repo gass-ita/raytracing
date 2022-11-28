@@ -51,5 +51,10 @@ public class Transform {
         return position;
     }
 
+    @Override
+    public String toString(){
+        return "Transform: " + "position: " + position;
+    }
+
    
 }

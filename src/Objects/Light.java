@@ -31,10 +31,7 @@ public class Light extends GObject{
 
 
 
-    @Override
-    public Vector3 getNormal(Vector3 point) {
-        return null;
-    }
+    
 
     @Override
     public Vector3 getIntersection(Ray ray) {
@@ -58,8 +55,9 @@ public class Light extends GObject{
 
     @Override
     public double getDistance(Ray ray) {
-        if(getIntersection(ray) != null){
-            return Vector3.subtract(ray.getOrigin(), getIntersection(ray)).magnitude();
+        Vector3 intersection = getIntersection(ray);
+        if(intersection != null){
+            return Vector3.subtract(ray.getOrigin(), intersection).magnitude();
         }
         return Double.MAX_VALUE;
     }

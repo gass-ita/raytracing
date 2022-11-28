@@ -4,29 +4,13 @@ import Math.Ray;
 import Math.Vector3;
 
 public class Sphere extends Solid{
+    static final double DEFAULT_RADIUS = 1;
 
-    static final double DEFAULT_RADIUS = 1.0;
-
-    protected double radius;
+    private double radius;
 
     public Sphere(){
         super();
-        this.radius = 1;
-    }
-
-    public Sphere(Transform transform){
-        super(transform);
         this.radius = DEFAULT_RADIUS;
-    }
-
-    public Sphere(Transform transform, Material material){
-        super(transform, material);
-        this.radius = DEFAULT_RADIUS;
-    }
-
-    public Sphere(Transform transform, Material material, double radius){
-        super(transform, material);
-        this.radius = radius;
     }
 
     public Sphere(Transform transform, double radius){
@@ -34,14 +18,39 @@ public class Sphere extends Solid{
         this.radius = radius;
     }
 
-    // TODO: FIX ME
-    @Override
-    public Vector3 getNormal(Vector3 point) {
-        return point.subtract(transform.getPosition()).normalize();
+    public Sphere(Sphere sphere){
+        super(sphere.getTransform());
+        this.radius = sphere.getRadius();
     }
 
-    //formulas taken from 
-    //https://youtu.be/HFPlKQGChpE
+    public Sphere(Transform transform, int radius, Material material) {
+        super(transform, material);
+        this.radius = radius;
+    }
+
+    public Sphere(Transform transform) {
+        super(transform);
+        this.radius = DEFAULT_RADIUS;
+    }
+
+
+
+    @Override
+    public Vector3 getNormal(Vector3 point) {
+        if(isInSolid(point)){
+            return Vector3.subtract(point, getTransform().getPosition()).normalize();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isInSolid(Vector3 point) {
+        double error = 0.0001;
+        return Vector3.subtract(point, getTransform().getPosition()).magnitude() - radius < error;
+    }
+
+    
+
     @Override
     public Vector3 getIntersection(Ray ray) {
         double t = Vector3.dot(Vector3.subtract(transform.getPosition(), ray.getOrigin()), ray.getDirection());
@@ -64,16 +73,32 @@ public class Sphere extends Solid{
         }
         return ray.getPoint(Math.min(t1, t2));
 
-
+        
     }
 
     @Override
     public double getDistance(Ray ray) {
-        if(getIntersection(ray) != null){
-            return Vector3.subtract(ray.getOrigin(), getIntersection(ray)).magnitude();
+        Vector3 intersection = getIntersection(ray);
+        if(intersection != null){
+            return Vector3.subtract(ray.getOrigin(), intersection).magnitude();
         }
-        return Double.MAX_VALUE;
+        return Double.POSITIVE_INFINITY;
+    }
+
+
+    public double getRadius(){
+        return radius;
+    }
+
+    public void setRadius(double radius){
+        this.radius = radius;
     }
 
     
+
+
+
+
+    
+
 }

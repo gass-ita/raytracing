@@ -5,6 +5,7 @@ import Math.Vector3;
 
 public abstract class Solid extends GObject{
     
+    
     static final Material DEFAULT_MATERIAL = new Material();
     
     private Material material;
@@ -39,13 +40,15 @@ public abstract class Solid extends GObject{
         this.material = material;
     }
 
-    @Override
     abstract public Vector3 getNormal(Vector3 point);
+    abstract public boolean isInSolid(Vector3 point);
 
+    
     @Override
     abstract public Vector3 getIntersection(Ray ray);
 
     @Override
     abstract public double getDistance(Ray ray);
+
     
 }
