@@ -1,7 +1,9 @@
-package Objects;
+package Objects.Solids;
 
 import Math.Ray;
 import Math.Vector3;
+import Objects.Material;
+import Objects.Transform;
 
 public class Sphere extends Solid{
     static final double DEFAULT_RADIUS = 1;

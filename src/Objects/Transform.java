@@ -4,6 +4,7 @@ import Math.Vector3;
 
 public class Transform {
     private Vector3 position;
+    private Vector3 scale;
     
 
     public Transform(){
@@ -11,20 +12,23 @@ public class Transform {
         
     }
 
-    public Transform(Vector3 position, Vector3 rotation, Vector3 scale){
+    
+    public Transform(Vector3 position, Vector3 scale){
         this.position = position;
+        this.scale = scale;
         
     }
 
-    public Transform(Vector3 position, Vector3 rotation){
-        this.position = position;
-        
-    }
+    
 
     public Transform(Vector3 position){
         this.position = position;
         
     }
+
+
+
+
 
     public Transform(Transform transform){
         this.position = transform.getPosition();
@@ -51,9 +55,18 @@ public class Transform {
         return position;
     }
 
+
+    public void setScale(Vector3 scale){
+        this.scale = scale;
+    }
+
+    public Vector3 getScale(){
+        return scale;
+    }
+
     @Override
     public String toString(){
-        return "Transform: " + "position: " + position;
+        return "Transform: " + "position: " + position + " scale: " + scale;
     }
 
    

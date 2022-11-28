@@ -1,7 +1,10 @@
-package Objects;
+package Objects.Solids;
 
 import Math.Ray;
 import Math.Vector3;
+import Objects.GObject;
+import Objects.Material;
+import Objects.Transform;
 
 public abstract class Solid extends GObject{
     
