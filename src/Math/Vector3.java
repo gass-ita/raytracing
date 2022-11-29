@@ -78,6 +78,7 @@ public class Vector3 {
         return Math.sqrt(Math.pow(p.getX() - position.getX(), 2) + Math.pow(p.getY() - position.getY(), 2) + Math.pow(p.getZ() - position.getZ(), 2));
     }
 
+
     /* PUBLIC METHODS */
 
 
@@ -160,6 +161,7 @@ public class Vector3 {
         return "Vector3 [x=" + x + ", y=" + y + ", z=" + z + "]";
     }
 
+   
 
 
 

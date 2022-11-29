@@ -86,4 +86,10 @@ public class Color {
     public int getRGB() {
         return red << 16 | green << 8 | blue;    
     }
+
+    public java.awt.Color getAWTColor() {
+        return new java.awt.Color(red, green, blue);
+    }
+
+    
 }
