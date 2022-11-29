@@ -55,7 +55,7 @@ public abstract class GObject {
         return transform;
     }
 
-    public boolean intersect(Ray ray){
+    public boolean intersects(Ray ray){
         return getIntersection(ray) != null;
     }
 

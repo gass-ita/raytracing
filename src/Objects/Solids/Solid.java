@@ -52,6 +52,4 @@ public abstract class Solid extends GObject{
 
     @Override
     abstract public double getDistance(Ray ray);
-
-    
 }
