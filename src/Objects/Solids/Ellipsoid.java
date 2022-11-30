@@ -100,5 +100,10 @@ public class Ellipsoid extends Solid {
         return Vector3.subtract(intersection, ray.getOrigin()).magnitude();
 
     }
+
+    @Override
+    public Solid copy() {
+        return new Ellipsoid(this);
+    }
         
 }

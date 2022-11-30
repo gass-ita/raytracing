@@ -34,6 +34,7 @@ public abstract class Solid extends GObject{
         this.material = solid.getMaterial();
     }
 
+    public abstract Solid copy();
 
     public Material getMaterial(){
         return material;

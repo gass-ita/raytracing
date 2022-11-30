@@ -96,6 +96,11 @@ public class Sphere extends Solid{
         this.radius = radius;
     }
 
+    @Override
+    public Solid copy() {
+        return new Sphere(this);
+    }
+
     
 
 

@@ -61,5 +61,9 @@ public class Light extends GObject{
         }
         return Double.MAX_VALUE;
     }
+
+    public Light copy() {
+        return new Light(this);
+    }
     
 }

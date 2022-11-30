@@ -27,7 +27,6 @@ public abstract class GObject {
     }
 
     
-
     abstract public Vector3 getIntersection(Ray ray);
     abstract public double getDistance(Ray ray);
 
