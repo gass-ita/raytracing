@@ -17,10 +17,38 @@ public class Scene {
     ArrayList<Solid> solids = new ArrayList<Solid>();
     ArrayList<Light> lights = new ArrayList<Light>();
 
+    ArrayList<Solid> movedSolids = new ArrayList<Solid>();
+    ArrayList<Light> movedLights = new ArrayList<Light>();
+
     //constructor
     public Scene( ArrayList<Solid> solids, ArrayList<Light> lights){
         this.solids = solids;
         this.lights = lights;
+
+        updateMovedSolids();
+        updateMovedLights();
+    }
+
+    private void updateMovedSolids(){
+        movedSolids.clear();
+        for(Solid solid : solids){
+            movedSolids.add(solid.copy());
+        }
+        for(Solid solid : movedSolids){
+            solid.translate(Vector3.inverse(cameraMovement));
+            //solid.rotate(cameraRotation);
+        }
+    }
+
+    private void updateMovedLights(){
+        movedLights.clear();
+        for(Light light : lights){
+            movedLights.add(light.copy());
+        }
+        for(Light light : movedLights){
+            light.translate(Vector3.inverse(cameraMovement));
+            //light.rotate(cameraRotation);
+        }
     }
 
     public void addSolid(Solid solid){
@@ -32,31 +60,37 @@ public class Scene {
     }
 
     public ArrayList<Solid> getMovedSolids(){
-        //return the solids with the camera position added to them
-        ArrayList<Solid> solids = new ArrayList<Solid>();
-        for(Solid solid : this.solids){
-            Solid solidCopy = solid.copy();
-            solidCopy.getTransform().setPosition(Vector3.add(solidCopy.getTransform().getPosition(), camera));
-        }
-        return solids;
+        return this.movedSolids;
     }
 
     public ArrayList<Light> getMovedLights(){
-        ArrayList<Light> lights = new ArrayList<Light>();
-        for(Light light : this.lights){
-            Light lightCopy = light.copy();
-            lightCopy.getTransform().setPosition(Vector3.add(lightCopy.getTransform().getPosition(), camera));
-        }
-        return lights;
+        return this.movedLights;
     }
 
     public void moveCamera(Vector3 movement){
         cameraMovement = Vector3.add(cameraMovement, movement);
+        updateMovedSolids();
+        updateMovedLights();
     }
 
     public void rotateCamera(Vector3 rotation){
         cameraRotation = Vector3.add(cameraRotation, rotation);
+        updateMovedSolids();
+        updateMovedLights();
     }
+
+    public Vector3 getCamera(){
+        return camera;
+    }
+
+    public Vector3 getCameraMovement(){
+        return cameraMovement;
+    }
+
+    public Vector3 getCameraRotation(){
+        return cameraRotation;
+    }
+
     
 
 }

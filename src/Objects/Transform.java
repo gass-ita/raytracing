@@ -28,6 +28,8 @@ public class Transform {
 
     public Transform(Vector3 position){
         this.position = position;
+        this.scale = new Vector3(1,1,1);
+        this.rotation = new Vector3();
         
     }
 
@@ -36,7 +38,9 @@ public class Transform {
 
 
     public Transform(Transform transform){
-        this.position = transform.getPosition();
+        this.position = transform.getPosition().copy();
+        this.scale = transform.getScale().copy();
+        this.rotation = transform.getRotation().copy();
         
     }
 

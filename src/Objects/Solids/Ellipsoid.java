@@ -21,7 +21,7 @@ public class Ellipsoid extends Solid {
     }
 
     public Ellipsoid(Ellipsoid ellipsoid){
-        super(ellipsoid.getTransform(), ellipsoid.getMaterial());
+        super(ellipsoid.getTransform().copy(), ellipsoid.getMaterial().copy());
     }
 
 
@@ -102,7 +102,7 @@ public class Ellipsoid extends Solid {
     }
 
     @Override
-    public Solid copy() {
+    public Ellipsoid copy() {
         return new Ellipsoid(this);
     }
         

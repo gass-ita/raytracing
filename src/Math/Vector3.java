@@ -27,11 +27,16 @@ public class Vector3 {
         this.z = z;
     }
 
-    /* STATIC METHODS */
 
     public Vector3(Vector3 origin, Vector3 position) {
         this(position.x - origin.x, position.y - origin.y, position.z - origin.z);
     }
+
+    public Vector3(Vector3 vector3) {
+        this(vector3.x, vector3.y, vector3.z);
+    }
+
+    
 
     public static Vector3 add(Vector3 v1, Vector3 v2){
         return new Vector3(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ());
@@ -76,6 +81,10 @@ public class Vector3 {
     
     public static double distance(Vector3 p, Vector3 position) {
         return Math.sqrt(Math.pow(p.getX() - position.getX(), 2) + Math.pow(p.getY() - position.getY(), 2) + Math.pow(p.getZ() - position.getZ(), 2));
+    }
+
+    public static Vector3 inverse(Vector3 vector) {
+        return new Vector3(-vector.getX(), -vector.getY(), -vector.getZ());
     }
 
 
@@ -160,6 +169,12 @@ public class Vector3 {
     public String toString() {
         return "Vector3 [x=" + x + ", y=" + y + ", z=" + z + "]";
     }
+
+    public Vector3 copy() {
+        return new Vector3(this);
+    }
+
+    
 
    
 

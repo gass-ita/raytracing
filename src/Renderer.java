@@ -19,28 +19,27 @@ import Objects.Solids.Solid;
 public class Renderer extends JPanel implements KeyListener{
     private int width;
     private int height;
-    private Vector3 camera;
-    private Vector3 cameraSpeed;
     private double fov;
-    private ArrayList<Solid> solids;
-    private ArrayList<Light> lights;
     private double fps;
     private double deltaTime;
     private boolean running = false;
+    private Scene scene;
 
-    public Renderer(int width, int height, Vector3 camera, double fov, ArrayList<Solid> solids, ArrayList<Light> lights){
+    public Renderer(int width, int height, double fov, ArrayList<Solid> solids, ArrayList<Light> lights){
         this.width = width;
         this.height = height;
-        this.camera = camera;
         this.fov = fov;
-        this.solids = solids;
-        this.lights = lights;
-        this.cameraSpeed = new Vector3(0, 0, 0);
+        this.scene = new Scene(solids, lights);
+
+        
+        
+        
         super.setSize(width, height);
     }
     
 
     private RayHit getClosestObject(Ray ray){
+        ArrayList<Solid> solids = scene.getMovedSolids();
         RayHit closest = null;
         for(Solid solid : solids){
             RayHit hit = new RayHit(solid, ray);
@@ -70,20 +69,18 @@ public class Renderer extends JPanel implements KeyListener{
     private BufferedImage render() {
         //get delta time
         long start = System.currentTimeMillis();
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-        camera = camera.add(cameraSpeed);
-        
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);        
         
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Vector3 pixelCoordinates = getPixelCoordinates(x, y);
-                Ray ray = new Ray(camera, pixelCoordinates);
+                Ray ray = new Ray(scene.getCamera(), pixelCoordinates);
                 RayHit hit = getClosestObject(ray);
                 if(hit != null){
                     Color color = hit.getMaterial().getColor();
                     Vector3 normal = hit.getNormal();
                     Vector3 lightDirection = new Vector3(0, 0, 0);
+                    ArrayList<Light> lights = scene.getMovedLights();
                     for(Light light : lights){
                         lightDirection = lightDirection.add(light.getTransform().getPosition().subtract(hit.getIntersection()).normalize());
                     }
@@ -123,8 +120,8 @@ public class Renderer extends JPanel implements KeyListener{
         
         
         g.drawString("FPS: " + fps, 10, 10);
-        g.drawString("Position: " + camera, 10, 20);
-        Ray ray = new Ray(camera, new Vector3(0, 0, 1));
+        g.drawString("Position: " + scene.getCameraMovement(), 10, 20);
+        Ray ray = new Ray(scene.getCamera(), new Vector3(0, 0, 1));
         RayHit hit = getClosestObject(ray);
 
         if(hit != null){
@@ -157,17 +154,13 @@ public class Renderer extends JPanel implements KeyListener{
         return fps;
     }
 
-    public void setCamera(Vector3 camera) {
-        this.camera = camera;
-    }
+    
 
     public void setFov(double fov) {
         this.fov = fov;
     }
 
-    public void setSolids(ArrayList<Solid> solids) {
-        this.solids = solids;
-    }
+   
 
     public void setWidth(int width) {
         this.width = width;
@@ -185,17 +178,13 @@ public class Renderer extends JPanel implements KeyListener{
         return height;
     }
 
-    public Vector3 getCamera() {
-        return camera;
-    }
+    
 
     public double getFov() {
         return fov;
     }
 
-    public ArrayList<Solid> getSolids() {
-        return solids;
-    }
+    
 
     public void start(){
         running = true;
@@ -215,31 +204,38 @@ public class Renderer extends JPanel implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_W){
-            cameraSpeed = new Vector3(0, 0, 10).multiply(deltaTime);
+            scene.moveCamera(new Vector3(0, 0, 1).multiply(deltaTime));
         }
+
         if(e.getKeyCode() == KeyEvent.VK_S){
-            cameraSpeed = new Vector3(0, 0, -10).multiply(deltaTime);
+            scene.moveCamera(new Vector3(0, 0, -1).multiply(deltaTime));
         }
+
         if(e.getKeyCode() == KeyEvent.VK_A){
-            cameraSpeed = new Vector3(-10, 0, 0).multiply(deltaTime);
+            scene.moveCamera(new Vector3(-1, 0, 0).multiply(deltaTime));
         }
+
         if(e.getKeyCode() == KeyEvent.VK_D){
-            cameraSpeed = new Vector3(10, 0, 0).multiply(deltaTime);
+            scene.moveCamera(new Vector3(1, 0, 0).multiply(deltaTime));
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            cameraSpeed = new Vector3(0, 10, 0).multiply(deltaTime);
+
+        if(e.getKeyCode() == KeyEvent.VK_Q){
+            scene.moveCamera(new Vector3(0, 1, 0).multiply(deltaTime));
         }
-        if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-            cameraSpeed = new Vector3(0, -10, 0).multiply(deltaTime);
-        }        
+
+        if(e.getKeyCode() == KeyEvent.VK_E){
+            scene.moveCamera(new Vector3(0, -1, 0).multiply(deltaTime));
+        }
+
+
     }
 
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_SHIFT){
+        /* if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_SHIFT){
             cameraSpeed = new Vector3(0, 0, 0);
-        }
+        } */
             
     }
 

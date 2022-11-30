@@ -33,7 +33,7 @@ public class Material {
     }
 
     public Material(Material material){
-        this.color = material.getColor();
+        this.color = material.getColor().copy();
         this.reflectivity = material.getReflectivity();
     }
 
@@ -51,5 +51,10 @@ public class Material {
 
     public double getReflectivity(){
         return reflectivity;
+    }
+
+
+    public Material copy() {
+        return new Material(this);
     }
 }

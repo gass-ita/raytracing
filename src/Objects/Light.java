@@ -25,7 +25,7 @@ public class Light extends GObject{
     }
 
     public Light(Light light){
-        super(light.getTransform());
+        super(light.getTransform().copy());
         this.intensity = light.getIntensity();
     }
 

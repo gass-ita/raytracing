@@ -21,7 +21,7 @@ public class Sphere extends Solid{
     }
 
     public Sphere(Sphere sphere){
-        super(sphere.getTransform());
+        super(sphere.getTransform().copy(), sphere.getMaterial().copy());
         this.radius = sphere.getRadius();
     }
 
@@ -97,7 +97,7 @@ public class Sphere extends Solid{
     }
 
     @Override
-    public Solid copy() {
+    public Sphere copy() {
         return new Sphere(this);
     }
 
