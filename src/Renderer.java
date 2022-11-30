@@ -25,6 +25,7 @@ public class Renderer extends JPanel implements KeyListener{
     private ArrayList<Solid> solids;
     private ArrayList<Light> lights;
     private double fps;
+    private double deltaTime;
     private boolean running = false;
 
     public Renderer(int width, int height, Vector3 camera, double fov, ArrayList<Solid> solids, ArrayList<Light> lights){
@@ -67,7 +68,7 @@ public class Renderer extends JPanel implements KeyListener{
     
 
     private BufferedImage render() {
-        //get fps
+        //get delta time
         long start = System.currentTimeMillis();
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -86,7 +87,8 @@ public class Renderer extends JPanel implements KeyListener{
             }
         }
         long end = System.currentTimeMillis();
-        fps = 1000 / (end - start);
+        deltaTime = (end - start) / 1000.0;
+        fps = 1 / deltaTime;
         return image;
     }
     
@@ -107,8 +109,16 @@ public class Renderer extends JPanel implements KeyListener{
         g.setColor(color.getAWTColor());
 
         
-
+        
         g.drawString("FPS: " + fps, 10, 10);
+        g.drawString("Position: " + camera, 10, 20);
+        Ray ray = new Ray(camera, new Vector3(0, 0, 1));
+        RayHit hit = getClosestObject(ray);
+
+        if(hit != null){
+            g.drawString("Distance: " + hit.getDistance(), 10, 30);
+            g.drawString("Object: " + hit.getSolid(), 10, 40);
+        }
 
         if (running) {
             repaint();

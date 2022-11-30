@@ -23,7 +23,7 @@ public class App {
 
         ArrayList<Solid> solids = new ArrayList<>();
         //solids.add(new Ellipsoid(new Transform(new Vector3(255, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(255, 0, 0))));
-        solids.add(new Ellipsoid(new Transform(new Vector3(225, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(0, 255, 0))));
+        solids.add(new Ellipsoid(new Transform(new Vector3(205, 255, 100), new Vector3(30, 10, 10)), new Material(new Color(0, 255, 0))));
         solids.add(new Ellipsoid(new Transform(new Vector3(255, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(255, 0, 0))));
         solids.add(new Ellipsoid(new Transform(new Vector3(285, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(0, 0, 255))));
 
