@@ -5,10 +5,14 @@ import Math.Vector3;
 public class Transform {
     private Vector3 position;
     private Vector3 scale;
+    private Vector3 rotation;
+    
     
 
     public Transform(){
         this.position = new Vector3();
+        this.scale = new Vector3(1,1,1);
+        this.rotation = new Vector3();
         
     }
 
@@ -16,6 +20,7 @@ public class Transform {
     public Transform(Vector3 position, Vector3 scale){
         this.position = position;
         this.scale = scale;
+        this.rotation = new Vector3();
         
     }
 
@@ -62,6 +67,14 @@ public class Transform {
 
     public Vector3 getScale(){
         return scale;
+    }
+
+    public void setRotation(Vector3 rotation){
+        this.rotation = rotation;
+    }
+
+    public Vector3 getRotation(){
+        return rotation;
     }
 
     @Override

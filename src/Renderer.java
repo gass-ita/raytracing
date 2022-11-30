@@ -82,6 +82,18 @@ public class Renderer extends JPanel implements KeyListener{
                 RayHit hit = getClosestObject(ray);
                 if(hit != null){
                     Color color = hit.getMaterial().getColor();
+                    Vector3 normal = hit.getNormal();
+                    Vector3 lightDirection = new Vector3(0, 0, 0);
+                    for(Light light : lights){
+                        lightDirection = lightDirection.add(light.getTransform().getPosition().subtract(hit.getIntersection()).normalize());
+                    }
+
+                    double dot = normal.dot(lightDirection);
+                    if(dot < 0){
+                        dot = 0;
+                    }
+                    color = color.multiply(dot);
+
                     image.setRGB(x, y, color.getRGB());
                 }
             }
@@ -118,6 +130,7 @@ public class Renderer extends JPanel implements KeyListener{
         if(hit != null){
             g.drawString("Distance: " + hit.getDistance(), 10, 30);
             g.drawString("Object: " + hit.getSolid(), 10, 40);
+            g.drawString("Collision Point: " + hit.getIntersection(), 10, 50);
         }
 
         if (running) {
@@ -131,13 +144,6 @@ public class Renderer extends JPanel implements KeyListener{
         return render();
     }
 
-    public JPanel getPanel(){
-        //return a JPanel with the image
-        JPanel panel = new JPanel();
-        //add the image to the panel
-        panel.paint(render().getGraphics());
-        return panel;
-    }
 
     public void renderToFile(String path) {
         try {
@@ -209,22 +215,22 @@ public class Renderer extends JPanel implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_W){
-            cameraSpeed = new Vector3(0, 0, 0.1);
+            cameraSpeed = new Vector3(0, 0, 10).multiply(deltaTime);
         }
         if(e.getKeyCode() == KeyEvent.VK_S){
-            cameraSpeed = new Vector3(0, 0, -0.1);
+            cameraSpeed = new Vector3(0, 0, -10).multiply(deltaTime);
         }
         if(e.getKeyCode() == KeyEvent.VK_A){
-            cameraSpeed = new Vector3(-0.1, 0, 0);
+            cameraSpeed = new Vector3(-10, 0, 0).multiply(deltaTime);
         }
         if(e.getKeyCode() == KeyEvent.VK_D){
-            cameraSpeed = new Vector3(0.1, 0, 0);
+            cameraSpeed = new Vector3(10, 0, 0).multiply(deltaTime);
         }
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            cameraSpeed = new Vector3(0, 0.1, 0);
+            cameraSpeed = new Vector3(0, 10, 0).multiply(deltaTime);
         }
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-            cameraSpeed = new Vector3(0, -0.1, 0);
+            cameraSpeed = new Vector3(0, -10, 0).multiply(deltaTime);
         }        
     }
 

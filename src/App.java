@@ -1,6 +1,7 @@
 import Math.Ray;
 import Math.Vector3;
 import Objects.Color;
+import Objects.Light;
 import Objects.Material;
 import Objects.Transform;
 import Objects.Solids.Ellipsoid;
@@ -23,13 +24,14 @@ public class App {
 
         ArrayList<Solid> solids = new ArrayList<>();
         //solids.add(new Ellipsoid(new Transform(new Vector3(255, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(255, 0, 0))));
-        solids.add(new Ellipsoid(new Transform(new Vector3(205, 255, 100), new Vector3(30, 10, 10)), new Material(new Color(0, 255, 0))));
+        solids.add(new Ellipsoid(new Transform(new Vector3(205, 255, 100), new Vector3(10, 10, 30)), new Material(new Color(0, 255, 0))));
         solids.add(new Ellipsoid(new Transform(new Vector3(255, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(255, 0, 0))));
         solids.add(new Ellipsoid(new Transform(new Vector3(285, 255, 100), new Vector3(10, 10, 10)), new Material(new Color(0, 0, 255))));
 
-        
+        ArrayList<Light> lights = new ArrayList<>();
+        lights.add(new Light(new Vector3(255, 255, 0), 10));
 
-        Renderer renderer = new Renderer(500, 500, new Vector3(0, 0, 0), 90, solids, null);
+        Renderer renderer = new Renderer(500, 500, new Vector3(0, 0, 0), 90, solids, lights);
         JFrame frame = new JFrame();
         
         frame.setSize(500, 500);
