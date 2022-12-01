@@ -2,6 +2,8 @@ package Objects;
 
 public class Color {
 
+    public static final Color BLACK = new Color(0,0,0);
+
     //default values
     static final Color DEFAULT_COLOR = new Color(0, 0, 0);
     

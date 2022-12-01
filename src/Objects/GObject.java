@@ -29,6 +29,9 @@ public abstract class GObject {
     
     abstract public Vector3 getIntersection(Ray ray);
     abstract public double getDistance(Ray ray);
+    public abstract GObject copy();
+    @Override
+    public abstract String toString();
 
     
     public Vector3 toLocalCoordinates(Vector3 point){
@@ -57,6 +60,7 @@ public abstract class GObject {
     public boolean intersects(Ray ray){
         return getIntersection(ray) != null;
     }
+
 
     
     

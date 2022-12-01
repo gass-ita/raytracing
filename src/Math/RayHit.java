@@ -2,35 +2,37 @@ package Math;
 
 import Objects.Material;
 import Objects.Solids.Solid;
+import Objects.GObject;
 
 public class RayHit {
-    Solid solid;
+    GObject object;
     Vector3 intersection;
     Ray ray;
     Material material;
     double distance;
     Vector3 normal;
 
-    public RayHit(Solid s, Ray r){
-        this.solid = s;
+    public RayHit(GObject s, Ray r){
+        this.object = s;
         this.ray = r;
         this.intersection = null;
-        this.material = null;
         calculate();
     }
 
     private void calculate() {
-        this.intersection = solid.getIntersection(ray);
+        this.intersection = object.getIntersection(ray);
         if(intersection != null){
-            this.material = solid.getMaterial();
             this.distance = Vector3.distance(ray.getOrigin(), intersection);
-            this.normal = solid.getNormal(intersection);
+            if(object instanceof Solid){
+                this.normal = ((Solid)object).getNormal(intersection);
+                this.material = ((Solid)object).getMaterial();
+            }
         }
 
     }
 
-    public Solid getSolid() {
-        return solid;
+    public GObject getObject() {
+        return object;
     }
 
     public Vector3 getIntersection() {
@@ -57,8 +59,8 @@ public class RayHit {
         return normal;
     }
 
-    public void setSolid(Solid solid) {
-        this.solid = solid;
+    public void setSolid(GObject object) {
+        this.object = object;
         calculate();
     }
 

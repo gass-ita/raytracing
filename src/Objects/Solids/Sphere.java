@@ -101,6 +101,11 @@ public class Sphere extends Solid{
         return new Sphere(this);
     }
 
+    @Override
+    public String toString() {
+        return "Sphere [radius=" + radius + ", transform=" + transform + ", material=" + material + "]";
+    }
+
     
 
 

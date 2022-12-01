@@ -90,7 +90,7 @@ public class Ellipsoid extends Solid {
         return intersection;
         
     }
-
+    
     @Override
     public double getDistance(Ray ray) {
         Vector3 intersection = getIntersection(ray);
@@ -98,12 +98,20 @@ public class Ellipsoid extends Solid {
             return Double.POSITIVE_INFINITY;
         }
         return Vector3.subtract(intersection, ray.getOrigin()).magnitude();
-
+        
     }
-
+    
+    
     @Override
     public Ellipsoid copy() {
         return new Ellipsoid(this);
     }
+
+    @Override
+    public String toString() {
+        return "Ellipsoid [transform=" + transform + ", material=" + material + "]";
+    }
+   
+    
         
 }

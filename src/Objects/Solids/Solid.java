@@ -11,7 +11,7 @@ public abstract class Solid extends GObject{
     
     static final Material DEFAULT_MATERIAL = new Material();
     
-    private Material material;
+    protected Material material;
     
 
     public Solid(){
@@ -34,6 +34,7 @@ public abstract class Solid extends GObject{
         this.material = solid.getMaterial();
     }
 
+    @Override
     public abstract Solid copy();
 
     public Material getMaterial(){
@@ -53,4 +54,6 @@ public abstract class Solid extends GObject{
 
     @Override
     abstract public double getDistance(Ray ray);
+
+
 }

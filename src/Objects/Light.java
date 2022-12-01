@@ -35,14 +35,23 @@ public class Light extends GObject{
 
     @Override
     public Vector3 getIntersection(Ray ray) {
-        Vector3 position = transform.getPosition();
-        double t = Vector3.dot(Vector3.subtract(position, ray.getOrigin()), ray.getDirection());
-        Vector3 p = Vector3.add(ray.getOrigin(), Vector3.multiply(ray.getDirection(), t));
-        if(Vector3.subtract(p, position).magnitude() < 0.1){
-            return p;
+        //ray point intersection
+        double error = .1;
+        
+        Vector3 rayPoint = ray.getOrigin();
+        Vector3 rayDirection = ray.getDirection();
+        Vector3 lightPosition = getTransform().getPosition();
+
+        double t = Vector3.dot(Vector3.subtract(lightPosition, rayPoint), rayDirection);
+        if(t < 0){
+            return null;
         }
-        return null;
-               
+        Vector3 p = Vector3.add(rayPoint, Vector3.multiply(rayDirection, t));
+        double y = Vector3.subtract(p, lightPosition).magnitude();
+        if(y > error){
+            return null;
+        }
+        return p;
     }
 
     public double getIntensity(){
@@ -62,8 +71,14 @@ public class Light extends GObject{
         return Double.MAX_VALUE;
     }
 
+    @Override
     public Light copy() {
         return new Light(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Light [intensity=" + intensity + ", transform=" + transform + "]";
     }
     
 }

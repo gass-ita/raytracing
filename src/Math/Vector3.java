@@ -21,7 +21,6 @@ public class Vector3 {
     }
 
     public Vector3(double x, double y, double z){
-        if(Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z)) throw new IllegalArgumentException("one or more argument is NaN");
         this.x = x;
         this.y = y;
         this.z = z;
@@ -139,17 +138,17 @@ public class Vector3 {
     /* SETTERS AND GETTERS */
 
     public void setX(double newX){
-        if(Double.isNaN(newX)) throw new IllegalArgumentException("newX is NaN");
+        
         x = newX;
     }
 
     public void setY(double newY){
-        if(Double.isNaN(newY)) throw new IllegalArgumentException("newY is NaN");
+        
         y = newY;
     }
 
     public void setZ(double newZ){
-        if(Double.isNaN(newZ)) throw new IllegalArgumentException("newZ is NaN");
+        
         z = newZ;
     }
 

@@ -16,6 +16,12 @@ public class Transform {
         
     }
 
+    public Transform(Vector3 position, Vector3 scale, Vector3 rotation){
+        this.position = position;
+        this.scale = scale;
+        this.rotation = rotation;
+    }
+
     
     public Transform(Vector3 position, Vector3 scale){
         this.position = position;

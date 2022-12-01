@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.Vector;
 
 import Math.Vector3;
+import Objects.GObject;
 import Objects.Light;
 import Objects.Solids.Solid;
 
@@ -9,34 +9,36 @@ import Objects.Solids.Solid;
  * Scene
  */
 public class Scene {
-    //the camera position is fixed
-    Vector3 camera = Vector3.ZERO;
-    Vector3 cameraMovement = Vector3.ZERO;
-    Vector3 cameraRotation = Vector3.ZERO;
+    private final Vector3 camera = Vector3.ZERO;
+    private Vector3 cameraMovement = Vector3.ZERO;
+    private Vector3 cameraRotation = Vector3.ZERO;
 
-    ArrayList<Solid> solids = new ArrayList<Solid>();
-    ArrayList<Light> lights = new ArrayList<Light>();
+    private ArrayList<Solid> solids = new ArrayList<Solid>();
+    private ArrayList<Light> lights = new ArrayList<Light>();
+    private ArrayList<GObject> objects = new ArrayList<GObject>();
 
-    ArrayList<Solid> movedSolids = new ArrayList<Solid>();
-    ArrayList<Light> movedLights = new ArrayList<Light>();
+    private ArrayList<Solid> movedSolids = new ArrayList<Solid>();
+    private ArrayList<Light> movedLights = new ArrayList<Light>();
+    private ArrayList<GObject> movedObjects = new ArrayList<GObject>();
+
 
     //constructor
     public Scene( ArrayList<Solid> solids, ArrayList<Light> lights){
         this.solids = solids;
         this.lights = lights;
+        this.objects.addAll(solids);
+        this.objects.addAll(lights);
 
-        updateMovedSolids();
-        updateMovedLights();
+        update();
     }
 
-    private void updateMovedSolids(){
+    /* private void updateMovedSolids(){
         movedSolids.clear();
         for(Solid solid : solids){
             movedSolids.add(solid.copy());
         }
         for(Solid solid : movedSolids){
             solid.translate(Vector3.inverse(cameraMovement));
-            //solid.rotate(cameraRotation);
         }
     }
 
@@ -47,9 +49,29 @@ public class Scene {
         }
         for(Light light : movedLights){
             light.translate(Vector3.inverse(cameraMovement));
-            //light.rotate(cameraRotation);
+        }
+    } */
+
+    private void update(){
+        movedLights.clear();
+        movedSolids.clear();
+        movedObjects.clear();
+
+        for(GObject object : objects){
+            movedObjects.add(object.copy());
+        }
+
+        for(GObject object : movedObjects){
+            object.translate(Vector3.inverse(cameraMovement));
+            if( object instanceof Solid){
+                movedSolids.add((Solid) object);
+            }else if( object instanceof Light){
+                movedLights.add((Light) object);
+            }
         }
     }
+
+    
 
     public void addSolid(Solid solid){
         solids.add(solid);
@@ -67,16 +89,18 @@ public class Scene {
         return this.movedLights;
     }
 
+    public ArrayList<GObject> getMovedObjects(){
+        return movedObjects;
+    }
+
     public void moveCamera(Vector3 movement){
         cameraMovement = Vector3.add(cameraMovement, movement);
-        updateMovedSolids();
-        updateMovedLights();
+        update();
     }
 
     public void rotateCamera(Vector3 rotation){
         cameraRotation = Vector3.add(cameraRotation, rotation);
-        updateMovedSolids();
-        updateMovedLights();
+        update();
     }
 
     public Vector3 getCamera(){
